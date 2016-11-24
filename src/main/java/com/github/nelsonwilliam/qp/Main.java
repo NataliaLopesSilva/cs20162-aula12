@@ -4,11 +4,12 @@
  */
 package com.github.nelsonwilliam.qp;
 
+import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -39,25 +40,61 @@ public class Main {
 
         //Checa se é local ou remoto
         if (args[0].startsWith("http")) {
+            System.out.println("O arquivo de testes será obtido remotamente.");
             localFile = false;
         }
 
         //Obtém o arquivo
-        System.out.println("Obtendo arquivo...");
+        System.out.println("Obtendo arquivo de testes...");
         try {
-            System.out.println("Arquivo obtido.");
-            testes = LeituraArquivo.obterLinhas(args[0], localFile);
+            testes = Leitura.obterLinhas(args[0], localFile);
+            System.out.println("Arquivo de testes obtido.");
         } catch (FileNotFoundException ex) {
-            System.out.println("Arquivo inexistente!");
+            System.out.println("Arquivo não encontrado.");
+            System.exit(1);
+        } catch (MalformedURLException ex) {
+            System.out.println("A URL fornecida é inválida.");
+            System.exit(1);
+        } catch (IOException ex) {
+            System.out.println("Não foi possível acessar o arquivo.");
+            System.exit(1);
         }
 
-        //Gera relatorio
-        System.out.println("Realizando testes...");
-        Testes gerador = new Testes(testes, exportHtml);
-        gerador.gerarRelatorio();
-        
-        System.exit(0);
+        //Obtém o diretório em que o relatório será salvo
+        String diretorioQp = null;
+        try {
+            diretorioQp = new File(Main.class.getProtectionDomain()
+                    .getCodeSource().getLocation().toURI().getPath())
+                    .getParent();
+        } catch (URISyntaxException ex) {
+            System.out.println("Não é possível gerar arquivo de relatório no "
+                    + "diretório atual.");
+            System.exit(1);
+        }
 
+        //Realiza as expressões e gera o relatório
+        System.out.println("Realizando expressões matemáticas...");
+        Relatorio gerador = new Relatorio(testes, exportHtml);
+        try {
+            gerador.gerarRelatorio(diretorioQp);
+        } catch (IOException ex) {
+            System.out.println("Não foi possível gerar arquivo de relatório.");
+            System.exit(1);
+        }
+        System.out.println("Expressões realizadas.");
+        if (gerador.todosSucessos()) {
+            System.out.println("Todos os testes obtiveram SUCESSO.");
+        } else {
+            System.out.println("Houveram testes que FALHARAM.");
+        }
+        if (exportHtml) {
+            System.out.println("Relatório HTML salvo em \"" + diretorioQp
+                    + "\\relatorio.html.\"");
+        } else {
+            System.out.println("Relatório JSON salvo em \"" + diretorioQp
+                    + "\\relatorio.json.\"");
+        }
+        System.exit(0);
     }
 
 }
