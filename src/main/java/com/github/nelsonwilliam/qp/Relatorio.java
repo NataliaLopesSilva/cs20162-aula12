@@ -202,9 +202,9 @@ public class Relatorio {
             arquivo.add("<tr>");
             arquivo.add("<td>" + teste.getExpressao() + "</td>");
             arquivo.add("<td>" + teste.getVariaveis() + "</td>");
-            arquivo.add("<td>" + String.format("%.3f", teste.getEsperado())
+            arquivo.add("<td>" + String.format("%.4f", teste.getEsperado())
                     + "</td>");
-            arquivo.add("<td>" + String.format("%.3f", teste.getObtido())
+            arquivo.add("<td>" + String.format("%.4f", teste.getObtido())
                     + "</td>");
             if (teste.getSucesso()) {
                 arquivo.add("<td><span style=\"color:#00FF00\">SIM</span>"

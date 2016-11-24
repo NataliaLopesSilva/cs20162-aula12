@@ -66,7 +66,7 @@ public class Teste {
         expressao = partes[0];
 
         variaveis = partes[1];
-        if (variaveis == null || variaveis.isEmpty()) {
+        if (variaveis.isEmpty()) {
             variaveisNome = null;
             variaveisValor = null;
         } else {
@@ -101,7 +101,7 @@ public class Teste {
      * @return Verdadeiro se o bloco de variáveis não for vazio.
      */
     public final boolean temVariaveis() {
-        return !variaveis.isEmpty();
+        return !(variaveis.isEmpty());
     }
 
     /**
@@ -163,10 +163,17 @@ public class Teste {
 
     /**
      * Executa o Parser (através da classe Calcular) para definir o valor obtido
-     * por este teste, com base em sua expressão e suas variáveis.
+     * por este teste, com base em sua expressão e suas variáveis. Se a
+     * expressão não puder ser calculada, o valor obtido é null.
+     *
      */
     public final void calcularValor() {
-        this.obtido = Calcular.resultadoExpressao(this);
+        try {
+            this.obtido = Calcular.resultadoExpressao(this);
+        } catch (Exception ex) {
+            obtido = null;
+            sucesso = false;
+        }
     }
 
     /**
@@ -177,7 +184,11 @@ public class Teste {
      * Desta forma, deve ser chamada após a medição do tempo.
      */
     public final void atualizarSucesso() {
-        this.sucesso = Objects.equals(esperado, obtido);
+        if (obtido != null) {
+            this.sucesso = Objects.equals(esperado, obtido);
+        } else {
+            this.sucesso = false;
+        }
     }
 
 }

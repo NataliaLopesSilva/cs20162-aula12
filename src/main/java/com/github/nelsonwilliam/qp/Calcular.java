@@ -33,13 +33,21 @@ public final class Calcular {
      * variáveis).
      * @return Resultado da expressão contida no teste fornecido, com base em
      * suas variáveis.
+     * @throws Exception Quando a expressão é inválida.
      */
-    public static float resultadoExpressao(final Teste teste) {
+    public static float resultadoExpressao(final Teste teste)
+            throws Exception {
 
-        if (teste.getVariaveis() == null || teste.getVariaveis().isEmpty()) {
+        if (teste.getVariaveis().isEmpty()) {
             List<Token> tokens = new Lexer(teste.getExpressao()).tokenize();
             Parser parser = new Parser(tokens);
-            return parser.expressao().valor();
+            float result;
+            try {
+                result = parser.expressao().valor();
+            } catch (IllegalArgumentException iae) {
+                throw new Exception();
+            }
+            return result;
 
         } else {
             Map<String, Float> ctx = new HashMap<>();
@@ -49,7 +57,13 @@ public final class Calcular {
             }
             List<Token> tokens = new Lexer(teste.getExpressao()).tokenize();
             Parser parser = new Parser(tokens);
-            return parser.expressao().valor(ctx);
+            float result;
+            try {
+                result = parser.expressao().valor(ctx);
+            } catch (IllegalArgumentException iae) {
+                throw new IllegalArgumentException();
+            }
+            return result;
         }
     }
 
