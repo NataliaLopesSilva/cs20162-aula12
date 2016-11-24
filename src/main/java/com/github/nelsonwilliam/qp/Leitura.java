@@ -1,7 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (c) 2016. Fábrica de Software - Instituto de Informática (UFG)
+ * Creative Commons Attribution 4.0 International License.
  */
 package com.github.nelsonwilliam.qp;
 
@@ -24,6 +23,12 @@ import java.util.Scanner;
 public final class Leitura {
 
     /**
+     * Impede instancialização de classe utilitária.
+     */
+    private Leitura() {
+    }
+
+    /**
      * Tenta obter o conteúdo de um arquivo de texto no computador ou em um
      * servidor.
      *
@@ -35,7 +40,8 @@ public final class Leitura {
      * @throws java.net.MalformedURLException Caso a URL inserida for inválida.
      * @throws IOException Caso não for possível acessar a URL.
      */
-    public static List<String> obterLinhas(String path, boolean local)
+    public static List<String> obterLinhas(final String path,
+            final boolean local)
             throws FileNotFoundException, MalformedURLException, IOException {
 
         if (local) {
@@ -54,7 +60,7 @@ public final class Leitura {
      * @throws MalformedURLException Quando a URL inserida for inválida.
      * @throws IOException Quando não for possível conectar-se ao servidor.
      */
-    private static List<String> obterLinhasOnline(String urlPath)
+    private static List<String> obterLinhasOnline(final String urlPath)
             throws MalformedURLException, IOException {
 
         List<String> linhas = new ArrayList<>();
@@ -79,7 +85,7 @@ public final class Leitura {
      * @return Todas as linhas do arquivo acessado.
      * @throws FileNotFoundException Quando o arquivo não existir.
      */
-    private static List<String> obterLinhasLocal(String path)
+    private static List<String> obterLinhasLocal(final String path)
             throws FileNotFoundException {
 
         List<String> linhas = new ArrayList<>();

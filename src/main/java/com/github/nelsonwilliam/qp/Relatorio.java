@@ -1,5 +1,6 @@
-/**
- * Todos os direitos reservados 2016 Nelson William
+/*
+ * Copyright (c) 2016. Fábrica de Software - Instituto de Informática (UFG)
+ * Creative Commons Attribution 4.0 International License.
  */
 package com.github.nelsonwilliam.qp;
 
@@ -18,6 +19,12 @@ import java.util.List;
  * @author Nelson William
  */
 public class Relatorio {
+
+    /**
+     * Valor para conversão de taxas em porcentagens (ex.: a taxa 0.5 vira 50
+     * porcento).
+     */
+    private static final float RATE_TO_PERCENT = 100f;
 
     /**
      * Todos os testes deste relatório.
@@ -49,10 +56,10 @@ public class Relatorio {
      * relatório e as linhas dos testes a serem executados.
      *
      * @param linhasTestes Linhas dos testes a serem executados.
-     * @param gerarHtml Se verdadeiro, o relatório será HTML. Se falso, o
-     * relatório será JSON.
+     * @param html Se verdadeiro, o relatório será HTML. Se falso, o relatório
+     * será JSON.
      */
-    public Relatorio(List<String> linhasTestes, boolean gerarHtml) {
+    public Relatorio(final List<String> linhasTestes, final boolean html) {
         //Ao instanciar a classe Relatório, já transforma-se todas as linhas de
         //teste fornecida em classes Teste propriamente ditas. Neste processo,
         //cada Teste já tem seus atributos separados (expressão, variáveis e
@@ -62,7 +69,7 @@ public class Relatorio {
         for (String linha : linhasTestes) {
             testes.add(new Teste(linha));
         }
-        this.gerarHtml = gerarHtml;
+        this.gerarHtml = html;
     }
 
     /**
@@ -76,7 +83,9 @@ public class Relatorio {
      * @throws java.io.IOException Quando não for possível guardar o arquivo no
      * diretório fornecido.
      */
-    public void gerarRelatorio(String diretorio) throws IOException {
+    public final void gerarRelatorio(final String diretorio)
+            throws IOException {
+
         //Obtém tempo e memória iniciais
         long inicio = System.currentTimeMillis();
         Runtime runtime = Runtime.getRuntime();
@@ -115,8 +124,11 @@ public class Relatorio {
 
     /**
      * Gera o arquivo do relatório, determinando se será em JSON ou HTML.
+     *
+     * @param diretorio Local em que o arquivo deverá ser salvo.
+     * @throws IOException Quando não foi possível salvar o arquivo.
      */
-    private void gerarArquivo(String diretorio) throws IOException {
+    private void gerarArquivo(final String diretorio) throws IOException {
         if (gerarHtml) {
             gerarArquivoHtml(diretorio);
         } else {
@@ -128,9 +140,10 @@ public class Relatorio {
      * Cria um arquivo HTML padrão para o relatório, e o salva no diretório
      * deste programa.
      *
+     * @param diretorio Local em que o arquivo deverá ser salvo.
      * @throws IOException Quando não é possível salvar o arquivo HTML.
      */
-    private void gerarArquivoHtml(String diretorio) throws IOException {
+    private void gerarArquivoHtml(final String diretorio) throws IOException {
         List<String> arquivo = new ArrayList<>();
 
         //Cabeçalho e início do relatório
@@ -160,7 +173,8 @@ public class Relatorio {
         arquivo.add("<h2>Informações gerais</h2>");
         arquivo.add("<p><b>Testes executados:</b> " + totTestes + " testes.");
         arquivo.add("</br><b>Testes que falharam:</b> " + failTestes
-                + " testes (" + String.format("%.0f", failRate * 100f) + "%).");
+                + " testes (" + String.format("%.0f", failRate
+                        * RATE_TO_PERCENT) + "%).");
         arquivo.add("</br><b>Tempo total:</b> "
                 + String.format("%.0f", tempoTotal) + " milisegundos.");
         arquivo.add("</br><b>Tempo médio:</b> "
@@ -188,10 +202,13 @@ public class Relatorio {
             arquivo.add("<tr>");
             arquivo.add("<td>" + teste.getExpressao() + "</td>");
             arquivo.add("<td>" + teste.getVariaveis() + "</td>");
-            arquivo.add("<td>" + String.format("%.3f", teste.getEsperado()) + "</td>");
-            arquivo.add("<td>" + String.format("%.3f", teste.getObtido()) + "</td>");
+            arquivo.add("<td>" + String.format("%.3f", teste.getEsperado())
+                    + "</td>");
+            arquivo.add("<td>" + String.format("%.3f", teste.getObtido())
+                    + "</td>");
             if (teste.getSucesso()) {
-                arquivo.add("<td><span style=\"color:#00FF00\">SIM</span></td>");
+                arquivo.add("<td><span style=\"color:#00FF00\">SIM</span>"
+                        + "</td>");
             } else {
                 arquivo.add("<td><span style=\"color:#FF0000\">NÃO</span>"
                         + "</td>");
@@ -221,9 +238,10 @@ public class Relatorio {
      * Cria um arquivo JSON padrão para o relatório, e o salva no diretório
      * deste programa.
      *
+     * @param diretorio Local em que o relatório deve ser salvo.
      * @throws IOException Quando não é possível salvar o arquivo JSON.
      */
-    private void gerarArquivoJson(String diretorio) throws IOException {
+    private void gerarArquivoJson(final String diretorio) throws IOException {
         List<String> arquivo = new ArrayList<>();
 
         //Informações gerais
@@ -249,7 +267,8 @@ public class Relatorio {
                 virgula = "";
             }
             arquivo.add("        {");
-            arquivo.add("            \"expressao\":\"" + teste.getExpressao() + "\",");
+            arquivo.add("            \"expressao\":\"" + teste.getExpressao()
+                    + "\",");
             if (teste.temVariaveis()) {
                 arquivo.add("            \"variaveis\":[");
                 for (int i = 0; i < teste.getVariaveisNome().length; i++) {
@@ -258,13 +277,16 @@ public class Relatorio {
                         virgulaVar = "";
                     }
                     arquivo.add("                {");
-                    arquivo.add("                    \"" + teste.getVariaveisNome()[i] + "\":" + teste.getVariaveisValor()[i]);
+                    arquivo.add("                    \""
+                            + teste.getVariaveisNome()[i] + "\":"
+                            + teste.getVariaveisValor()[i]);
                     arquivo.add("                }" + virgulaVar);
                 }
                 arquivo.add("            ],");
 
             }
-            arquivo.add("            \"esperado\":" + teste.getEsperado() + ",");
+            arquivo.add("            \"esperado\":" + teste.getEsperado()
+                    + ",");
             arquivo.add("            \"obtido\":" + teste.getObtido() + ",");
             arquivo.add("            \"sucesso\":" + teste.getSucesso());
             arquivo.add("        }" + virgula);
@@ -283,7 +305,7 @@ public class Relatorio {
      *
      * @return Falso se pelo menos um teste tiver dado errado.
      */
-    public boolean todosSucessos() {
+    public final boolean todosSucessos() {
         for (Teste teste : testes) {
             if (!teste.getSucesso()) {
                 return false;

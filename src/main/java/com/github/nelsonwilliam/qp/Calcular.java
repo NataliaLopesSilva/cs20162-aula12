@@ -1,5 +1,6 @@
 /*
- *
+ * Copyright (c) 2016. Fábrica de Software - Instituto de Informática (UFG)
+ * Creative Commons Attribution 4.0 International License.
  */
 package com.github.nelsonwilliam.qp;
 
@@ -19,13 +20,21 @@ import java.util.Map;
 public final class Calcular {
 
     /**
+     * Impede instancialização de classe utilitária.
+     */
+    private Calcular() {
+    }
+
+    /**
      * Usa o Parser o valor de uma expressão matemática, com base nos valores
      * das variáveis fornecidas (no formato "x=1" separadas por vírgula).
      *
-     * @param teste
-     * @return
+     * @param teste Teste a ser analisado (deve possuir expressão e talvez
+     * variáveis).
+     * @return Resultado da expressão contida no teste fornecido, com base em
+     * suas variáveis.
      */
-    public static float resultadoExpressao(Teste teste) {
+    public static float resultadoExpressao(final Teste teste) {
 
         if (teste.getVariaveis() == null || teste.getVariaveis().isEmpty()) {
             List<Token> tokens = new Lexer(teste.getExpressao()).tokenize();
@@ -35,7 +44,8 @@ public final class Calcular {
         } else {
             Map<String, Float> ctx = new HashMap<>();
             for (int i = 0; i < teste.getVariaveisNome().length; i++) {
-                ctx.put(teste.getVariaveisNome()[i], teste.getVariaveisValor()[i]);
+                ctx.put(teste.getVariaveisNome()[i],
+                        teste.getVariaveisValor()[i]);
             }
             List<Token> tokens = new Lexer(teste.getExpressao()).tokenize();
             Parser parser = new Parser(tokens);

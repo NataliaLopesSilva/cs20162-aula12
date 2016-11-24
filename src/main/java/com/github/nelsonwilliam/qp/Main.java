@@ -12,20 +12,36 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 /**
+ * Lógica principal do programa com base nos parâmetros fornecidos.
  *
  * @author NelsonWilliam
  */
-public class Main {
+public final class Main {
 
-    public static void main(String[] args) {
+    /**
+     * Impede instancialização de classe utilitária.
+     */
+    private Main() {
+    }
+
+    /**
+     * Lógica principal do programa. Verifica os parâmetros fornecidos, obtém o
+     * arquivo de testes, executa o teste das expressões do arquivo de teste e
+     * gera o relatório no formato escolhido.
+     *
+     * @param args Parâmetros. O primeiro parâmetro deve ser o local do arquivo
+     * TXT de testes, podendo ser local ou remoto. O segundo parâmetro é
+     * opcional, mas caso fornecido, deve ser "-h" e indica geração de relatório
+     * HTML e não JSON. Outros parâmetros não são aceitos.
+     */
+    public static void main(final String[] args) {
         boolean exportHtml = false;
         boolean localFile = true;
         List<String> testes = null;
 
         //Checa quantidade de parâmetros (deve ser 1 ou 2)
         if (args.length != 1 && args.length != 2) {
-            System.out.println("Quantidade de parâmetros inválida.");
-            System.exit(1);
+            erro("Quantidade de parâmetros inválida.");
         }
 
         //Checa o segundo parâmetro (só pode ser "-h")
@@ -33,8 +49,7 @@ public class Main {
             if (args[1].equals("-h")) {
                 exportHtml = true;
             } else {
-                System.out.println("Segundo parâmetro inválido.");
-                System.exit(1);
+                erro("Segundo parâmetro inválido.");
             }
         }
 
@@ -50,14 +65,11 @@ public class Main {
             testes = Leitura.obterLinhas(args[0], localFile);
             System.out.println("Arquivo de testes obtido.");
         } catch (FileNotFoundException ex) {
-            System.out.println("Arquivo não encontrado.");
-            System.exit(1);
+            erro("Arquivo não encontrado.");
         } catch (MalformedURLException ex) {
-            System.out.println("A URL fornecida é inválida.");
-            System.exit(1);
+            erro("A URL fornecida é inválida.");
         } catch (IOException ex) {
-            System.out.println("Não foi possível acessar o arquivo.");
-            System.exit(1);
+            erro("Não foi possível acessar o arquivo.");
         }
 
         //Obtém o diretório em que o relatório será salvo
@@ -67,9 +79,8 @@ public class Main {
                     .getCodeSource().getLocation().toURI().getPath())
                     .getParent();
         } catch (URISyntaxException ex) {
-            System.out.println("Não é possível gerar arquivo de relatório no "
+            erro("Não é possível gerar arquivo de relatório no "
                     + "diretório atual.");
-            System.exit(1);
         }
 
         //Realiza as expressões e gera o relatório
@@ -78,8 +89,7 @@ public class Main {
         try {
             gerador.gerarRelatorio(diretorioQp);
         } catch (IOException ex) {
-            System.out.println("Não foi possível gerar arquivo de relatório.");
-            System.exit(1);
+            erro("Não foi possível gerar arquivo de relatório.");
         }
         System.out.println("Expressões realizadas.");
         if (gerador.todosSucessos()) {
@@ -95,6 +105,16 @@ public class Main {
                     + "\\relatorio.json.\"");
         }
         System.exit(0);
+    }
+
+    /**
+     * Finaliza o programa com erro.
+     *
+     * @param mensagem Mensagem a ser exibida antes de finalizar.
+     */
+    public static void erro(final String mensagem) {
+        System.out.println(mensagem);
+        System.exit(1);
     }
 
 }
