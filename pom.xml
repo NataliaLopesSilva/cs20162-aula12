@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -6,25 +7,24 @@
 
     <!-- mvn javadoc:javadoc
          Gera documentação do projeto
-
          mvn package -P cobertura
          Compila, executa testes e elabora relatório de cobertura.
-
          mvn exec:java -Dexec.mainClass="com.github.kyriosdata.exemplo.ProgramaCalendario"
          Executa o programa exemplo
     -->
 
-    <groupId>com.github.nelsonwilliam</groupId>
+    <groupId>com.github.natalialopessilva</groupId>
     <artifactId>qp</artifactId>
     <packaging>jar</packaging>
     <version>1.0.0</version>
 
-    <name>com.github.nelsonwilliam:qp</name>
+    <name>com.github.natalialopessilva:qp</name>
 
-    <description>Ordem de serviço 2.
-        Fábrica de Software - Instituto de Informática (UFG).</description>
+    <description>
+        Segunda ordem de serviço (Projeto que testa o parser).
+    </description>
 
-    <url>https://github.com/nelsonwilliam/cs20162-aula12</url>
+    <url>https://github.com/natalialopessilva/cs20162-aula12</url>
 
     <organization>
         <name>Instituto de Informática (UFG) - Fábrica de Software</name>
@@ -42,6 +42,22 @@
             <url>https://creativecommons.org/licenses/by/4.0/</url>
         </license>
     </licenses>
+
+    <developers>
+        <developer>
+            <id>natalialopessilva</id>
+            <name>Natália Lopes Silva</name>
+            <email>natalialopescig@gmail.com</email>
+            <organization>Instituto de Informática (UFG)</organization>
+            <organizationUrl>http://www.inf.ufg.br</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:https://github.com/NataliaLopesSilva</connection>
+        <developerConnection>scm:git:https://github.com/NataliaLopesSilva</developerConnection>
+        <url>https://github.com/Moraesofia</url>
+    </scm>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -66,18 +82,16 @@
             <artifactId>log4j-core</artifactId>
             <version>2.7</version>
         </dependency>
-
-        <!-- Projeto Parser -->
+        
         <dependency>
             <groupId>com.github.kyriosdata.parser</groupId>
             <artifactId>parser</artifactId>
             <version>1.0.1</version>
-            <type>jar</type>
         </dependency>
         <dependency>
-            <groupId>com.github.stefanbirkner</groupId>
-            <artifactId>system-rules</artifactId>
-            <version>1.3.0</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.0.0-M2</version>
             <scope>test</scope>
             <type>jar</type>
         </dependency>
@@ -97,22 +111,18 @@
                 <artifactId>pitest-maven</artifactId>
                 <version>1.1.10</version>
                 <configuration>
-                    <!--
                     <targetClasses>
-                        <param>com.github.nelsonwilliam.qp.Main</param>
+                        <param>com.github.natalialopessilva.qp</param>
                     </targetClasses>
                     <targetTests>
-                        <param>com.github.nelsonwilliam.qp.*</param>
+                        <param>com.github.natalialopessilva.qp.*</param>
                     </targetTests>
-                    -->
                 </configuration>
             </plugin>
 
-            <!-- Permite a geração do .jar -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.0</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -150,7 +160,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>jars/</classpathPrefix>
-                            <mainClass>com.github.nelsonwilliam.qp.Main</mainClass>
+                            <mainClass>com.github.natalialopessilva.qp.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
