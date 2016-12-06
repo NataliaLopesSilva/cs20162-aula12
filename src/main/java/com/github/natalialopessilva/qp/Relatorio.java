@@ -1,10 +1,7 @@
 package com.github.natalialopessilva.qp;
 
+import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,7 +71,7 @@ public class Relatorio {
         this.memoriaFinal = memoriaFinal;
     }
 
-    private void gerarArquivoHtml(String diretorio, Relatorio relatorio, List<Expressoes> listaExpressoes) throws IOException {
+    public void gerarArquivoHtml(String diretorio, Relatorio relatorio, List<Expressoes> listaExpressoes) throws IOException {
         List<String> arquivo = new ArrayList<>();
 
         arquivo.add("<!DOCTYPE html>");
@@ -119,7 +116,7 @@ public class Relatorio {
         arquivo.add("<table>");
         arquivo.add("<tr>\n"
                 + "                <th id=\"tituloAzul\" style=\"text-align: center;\">\n"
-                + "                    <h2 style=\"color: white\"> RELATÓRIO DE TESTES</h3> \n"
+                + "                    <h2 style=\"color: white\"> RELATORIO DE TESTES</h3> \n"
                 + "                </th>\n"
                 + "            </tr>");
         arquivo.add("</table>");
@@ -130,16 +127,16 @@ public class Relatorio {
 
         arquivo.add("<table>");
         arquivo.add("<tr>");
-        arquivo.add("<th style=\"width: 25%\">Tempo gasto na Execução</th>");
-        arquivo.add("<th style=\"width: 25%\">Tempo médio de Execução</th>");
-        arquivo.add("<th style=\"width: 25%\">Quantidade de memória Inicial </th>");
-        arquivo.add("<th style=\"width: 25%\">Quantidade de memória Final </th>");
+        arquivo.add("<th style=\"width: 25%\">Tempo gasto na Execucao</th>");
+        arquivo.add("<th style=\"width: 25%\">Tempo medio de Execucao</th>");
+        arquivo.add("<th style=\"width: 25%\">Quantidade de memoria Inicial </th>");
+        arquivo.add("<th style=\"width: 25%\">Quantidade de memoria Final </th>");
         arquivo.add("</tr>");
         arquivo.add("<tr>");
-        arquivo.add("<td>" + String.format("%.0f", relatorio.getTempoExecucao()) + " milisegundos </td>");
-        arquivo.add("<td>" + String.format("%.3f", relatorio.getTempoMedio()) + " milisegundos/teste </td>");
-        arquivo.add("<td>" + String.format("%.2f", relatorio.getMemoriaInicial()) + " bytes </td>");
-        arquivo.add("<td>" + String.format("%.2f", relatorio.getMemoriaFinal()) + " bytes </td>");
+        arquivo.add("<td>" + String.format("%d", relatorio.getTempoExecucao()) + " nanosegundos </td>");
+        arquivo.add("<td>" + String.format("%d", relatorio.getTempoMedio()) + " nanosegundos por teste </td>");
+        arquivo.add("<td>" + String.format("%d", relatorio.getMemoriaInicial()) + " bytes </td>");
+        arquivo.add("<td>" + String.format("%d", relatorio.getMemoriaFinal()) + " bytes </td>");
         arquivo.add("</tr>");
         arquivo.add("</table>");
 
@@ -164,39 +161,55 @@ public class Relatorio {
         arquivo.add("<br/><br/><br/>");
         arquivo.add("<hr/>");
         arquivo.add("<h2 style=\"text-align: center; color: #1A237E\">\n"
-                + "            RELATÓRIO DETALHADO DE TESTES\n"
+                + "            RELATORIO DETALHADO DE TESTES\n"
                 + "        </h2>");
         arquivo.add("<hr/>");
 
         arquivo.add("<table>");
         arquivo.add("<tr>");
-        arquivo.add("<th style=\"width: 40%\">Expressão</th>");
+        arquivo.add("<th style=\"width: 40%\">Expressao</th>");
         arquivo.add("<th style=\"width: 30%\">Resultado Esperado</th>");
         arquivo.add("<th style=\"width: 30%\">Resultado Obtido</th>");
+        arquivo.add("<th style=\"width: 30%\">Situacao</th>");
         arquivo.add("</tr>");
 
-        for (Expressoes expressoes : listaExpressoes) {
+        listaExpressoes.stream().map((expressoes) -> {
             arquivo.add("<tr>");
             arquivo.add("<td>" + expressoes.getExpressao() + "</td>");
-            arquivo.add("<td>" + expressoes.getVariaveis() + "</td>");
-            arquivo.add("<td>" + String.format("%.4f", expressoes.getEsperado())
+            return expressoes;
+        }).map((expressoes) -> {
+            arquivo.add("<td>" + String.format("%.2f", expressoes.getEsperado())
                     + "</td>");
-            arquivo.add("<td>" + String.format("%.4f", expressoes.getResultado())
+            return expressoes;
+        }).map((expressoes) -> {
+            arquivo.add("<td>" + String.format("%.2f", expressoes.getResultado())
                     + "</td>");
+            return expressoes;
+        }).map((expressoes) -> {
+            if (expressoes.getSituacao().equals("Aprovado")) {
+                arquivo.add("<td><label style=\"color: green\">" + expressoes.getSituacao() + "</label></td>");
+            } else {
+                arquivo.add("<td><label style=\"color: red\">" + expressoes.getSituacao() + "</label></td>");
+            }
+            return expressoes;
+        }).forEach((_item) -> {
             arquivo.add("</tr>");
-        }
+        });
         arquivo.add("</table>");
         arquivo.add("");
         arquivo.add("</body>");
         arquivo.add("");
         arquivo.add("</html>");
 
-        //Cria e salva o arquivo
-        Path file = Paths.get(diretorio + "/relatorio.html");
-        Files.write(file, arquivo, Charset.forName("UTF-8"));
+        try (FileWriter fw = new FileWriter("relatorioHTML.html")) {
+            fw.write(arquivo.toString());
+        } catch (IOException ioe) {
+            System.out.println("Erro da geração do Arquivo HTML\n"
+                    + ioe.getMessage());
+        }
     }
 
-    private void gerarArquivoJson(final String diretorio, Relatorio relatorio, List<Expressoes> listaExpressoes) throws IOException {
+    public void gerarArquivoJson(final String diretorio, Relatorio relatorio, List<Expressoes> listaExpressoes) throws IOException {
         List<String> arquivo = new ArrayList<>();
 
         arquivo.add("{");
@@ -242,8 +255,11 @@ public class Relatorio {
         arquivo.add("    ]");
         arquivo.add("}");
 
-        //Cria e salva o arquivo
-        Path file = Paths.get(diretorio + "/relatorio.json");
-        Files.write(file, arquivo, Charset.forName("UTF-8"));
+        try (FileWriter fw = new FileWriter("relatorioJSON.json")) {
+            fw.write(arquivo.toString());
+        } catch (IOException ioe) {
+            System.out.println("Erro da geração do Arquivo JSON\n"
+                    + ioe.getMessage());
+        }
     }
 }

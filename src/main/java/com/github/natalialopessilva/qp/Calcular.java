@@ -47,7 +47,7 @@ public class Calcular {
             if (resultado.getEsperado() == resultado.getResultado()) {
                 resultado.setSituacao("Aprovado");
             } else {
-                resultado.setSituacao("Erro");
+                resultado.setSituacao("Reprovado");
             }
         });
     }

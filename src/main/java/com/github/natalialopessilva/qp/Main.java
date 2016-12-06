@@ -6,8 +6,10 @@
 package com.github.natalialopessilva.qp;
 
 import static com.github.natalialopessilva.qp.Calcular.calculaExpressao;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  *
@@ -17,11 +19,23 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
+        String diretorio = args[0];
+        String saida = args[1];
+
+        if (saida.equals("-h")) {
+            saida = "html";
+        } else {
+            saida = "json";
+        }
+
         List<String> lista = new ArrayList<String>();
         List<Expressoes> listaResultados = new ArrayList<Expressoes>();
 
         long inicioExecucao = System.nanoTime();
-        lista = Leitura.leituraLinhas();
+
+        Scanner ler = new Scanner(System.in);
+
+        lista = Leitura.leituraLinhas(diretorio);
 
         for (int i = 0; i < lista.size(); i++) {
             Expressoes objExpressoes = new Expressoes(lista.get(i));
@@ -31,11 +45,11 @@ public class Main {
         calculaExpressao(listaResultados);
         long finalExecucao = System.nanoTime();
         long tempoTotalExecucao = finalExecucao - inicioExecucao;
-        geraRelatorio(listaResultados, tempoTotalExecucao);
+        geraRelatorio(saida, diretorio, listaResultados, tempoTotalExecucao);
 
     }
 
-    public static void geraRelatorio(List<Expressoes> listaResultados, long tempoExecucao) {
+    public static void geraRelatorio(String saida, String diretorio, List<Expressoes> listaResultados, long tempoExecucao) throws IOException {
         int corretos = 0;
         int falhas = 0;
         int testesTotais = listaResultados.size();
@@ -59,6 +73,11 @@ public class Main {
         relatorio.setTempoExecucao(tempoExecucao);
         relatorio.setTempoMedio(tempoMedio);
 
+        if (saida.equals("html")) {
+            relatorio.gerarArquivoHtml(diretorio, relatorio, listaResultados);
+        } else {
+            relatorio.gerarArquivoJson(diretorio, relatorio, listaResultados);
+        }
     }
 
     public static void calculoMemoria(Relatorio relatorio) {
@@ -70,7 +89,7 @@ public class Main {
         memoriaInicial = rt.totalMemory();
         memoriaUsada = rt.totalMemory() - rt.freeMemory();
         memoriaLivre = rt.maxMemory() - memoriaUsada;
-        
+
         relatorio.setMemoriaInicial(memoriaInicial);
         relatorio.setMemoriaFinal(memoriaLivre);
     }

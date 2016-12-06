@@ -5,20 +5,15 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Leitura {
 
-    public static ArrayList<String> leituraLinhas() {
+    public static ArrayList<String> leituraLinhas(String diretorio) {
 
-        Scanner ler = new Scanner(System.in);
         List<String> listaLinhas = new ArrayList<String>();
 
-        System.out.printf("Informe o nome de arquivo texto:\n");
-        String nome = ler.nextLine();
-
         try {
-            FileReader arq = new FileReader(nome);
+            FileReader arq = new FileReader(diretorio);
             BufferedReader lerArq = new BufferedReader(arq);
 
             String linha = lerArq.readLine();
@@ -37,6 +32,4 @@ public class Leitura {
         System.out.println();
         return (ArrayList<String>) listaLinhas;
     }
-    
-    
 }
