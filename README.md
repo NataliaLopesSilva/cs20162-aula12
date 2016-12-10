@@ -10,8 +10,12 @@ Após a compilação do projeto em um arquivo qp.jar, sua utilização segue o p
 java -jar qp.jar "Local do Arquivo"
 ```
 ## Para geração do relatório html
+```
 java -jar qp.jar "Local do Arquivo" -h
+```
 
 ## Para geração do relatório json
+```
 java -jar qp.jar "Local do Arquivo"
+```
 
