@@ -6,9 +6,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- mvn javadoc:javadoc
-         Gera documentação do projeto
+         Gera documentaÃ§Ã£o do projeto
          mvn package -P cobertura
-         Compila, executa testes e elabora relatório de cobertura.
+         Compila, executa testes e elabora relatÃ³rio de cobertura.
          mvn exec:java -Dexec.mainClass="com.github.kyriosdata.exemplo.ProgramaCalendario"
          Executa o programa exemplo
     -->
@@ -21,13 +21,13 @@
     <name>com.github.natalialopessilva:qp</name>
 
     <description>
-        Segunda ordem de serviço (Projeto que testa o parser).
+        Segunda ordem de serviÃ§o (Projeto que testa o parser).
     </description>
 
     <url>https://github.com/natalialopessilva/cs20162-aula12</url>
 
     <organization>
-        <name>Instituto de Informática (UFG) - Fábrica de Software</name>
+        <name>Instituto de InformÃ¡tica (UFG) - FÃ¡brica de Software</name>
         <url>http://www.inf.ufg.br</url>
     </organization>
 
@@ -36,8 +36,8 @@
     <licenses>
         <license>
             <name>Creative Commons Attribution 4.0 International (CC BY 4.0)</name>
-            <comments>A atribuição deve conter, explicitamente, a seguinte linha:
-                Copyright (c) 2016. Fábrica de Software - Instituto de Informática (UFG)
+            <comments>A atribuiÃ§Ã£o deve conter, explicitamente, a seguinte linha:
+                Copyright (c) 2016. FÃ¡brica de Software - Instituto de InformÃ¡tica (UFG)
             </comments>
             <url>https://creativecommons.org/licenses/by/4.0/</url>
         </license>
@@ -46,9 +46,9 @@
     <developers>
         <developer>
             <id>natalialopessilva</id>
-            <name>Natália Lopes Silva</name>
+            <name>NatÃ¡lia Lopes Silva</name>
             <email>natalialopescig@gmail.com</email>
-            <organization>Instituto de Informática (UFG)</organization>
+            <organization>Instituto de InformÃ¡tica (UFG)</organization>
             <organizationUrl>http://www.inf.ufg.br</organizationUrl>
         </developer>
     </developers>
@@ -56,7 +56,7 @@
     <scm>
         <connection>scm:git:https://github.com/NataliaLopesSilva</connection>
         <developerConnection>scm:git:https://github.com/NataliaLopesSilva</developerConnection>
-        <url>https://github.com/Moraesofia</url>
+        <url>https://github.com/NataliaLopesSilva</url>
     </scm>
 
     <properties>
@@ -106,13 +106,13 @@
 
     <build>
 
-        <!-- Define o nome do arquivo a ser gerado (.jar é acrescentada) -->
+        <!-- Define o nome do arquivo a ser gerado (.jar Ã© acrescentada) -->
         <finalName>qp</finalName>
 
         <plugins>
 
             <!-- mvn org.pitest:pitest-maven:muatationCoverage -->
-            <!-- Relatório em: target/pit-reports/YYYYMMDDHHMM -->
+            <!-- RelatÃ³rio em: target/pit-reports/YYYYMMDDHHMM -->
             <plugin>
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
@@ -155,9 +155,9 @@
                 </executions>
             </plugin>
 
-            <!-- Copia dependencias para "jars", não incluída no jar.    -->
-            <!-- Ou seja, você deve obter exemplo.jar e o diretório jars -->
-            <!-- para que a aplicação seja executada satisfatoriamente.  -->
+            <!-- Copia dependencias para "jars", nÃ£o incluÃ­da no jar.    -->
+            <!-- Ou seja, vocÃª deve obter exemplo.jar e o diretÃ³rio jars -->
+            <!-- para que a aplicaÃ§Ã£o seja executada satisfatoriamente.  -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -176,7 +176,7 @@
         </plugins>
     </build>
 
-    <!-- mvn site (gera relatório em Project Report -->
+    <!-- mvn site (gera relatÃ³rio em Project Report -->
     <reporting>
         <plugins>
             <plugin>

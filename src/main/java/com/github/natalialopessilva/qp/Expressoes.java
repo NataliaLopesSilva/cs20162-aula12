@@ -8,9 +8,9 @@ package com.github.natalialopessilva.qp;
  * Implementação da Classe Expressoes.
  *
  * <p>
- * Responsável pelo separação das expressões em suas respectivas partes devidas,
- * bem como guarda todos os valores pertencentes a elas, fora o valor do
- * comparativo do Parser.
+ * Responsável pelo separação das expressões em suas respectivas partes
+ * devidas, bem como guarda todos os valores pertencentes a elas, fora o valor
+ * do comparativo do Parser.
  *
  */
 public class Expressoes {
@@ -31,7 +31,8 @@ public class Expressoes {
     private String[] variaveisNome;
 
     /**
-     * Variável que receberá as variáveis da expressão, do tipo valor literal.
+     * Variável que receberá as variáveis da expressão, do tipo valor
+     * literal.
      */
     private Float[] variaveisValor;
 
@@ -41,13 +42,14 @@ public class Expressoes {
     private Float esperado;
 
     /**
-     * Variável que receberá o resultado obtido pelo Parser para a expressão em
-     * questão.
+     * Variável que receberá o resultado obtido pelo Parser para a expressão
+     * em questão.
      */
     private Float resultado;
 
     /**
-     * Variável que receberá a situação da expressão (Aprovada ou Reprovada).
+     * Variável que receberá a situação da expressão (Aprovada ou
+     * Reprovada).
      */
     private String situacao;
 
@@ -150,9 +152,11 @@ public class Expressoes {
     }
 
     /**
-     * Método necessário que acessa a variável variaveisNome pois ela é privada.
+     * Método necessário que acessa a variável variaveisNome pois ela é
+     * privada.
      *
-     * @return variaveisNome que nada mais é do que o valor da própia variável.
+     * @return variaveisNome que nada mais é do que o valor da própia
+     * variável.
      *
      */
     public final String[] getVariaveisNome() {
@@ -170,10 +174,11 @@ public class Expressoes {
     }
 
     /**
-     * Método necessário que acessa a variável variaveisValor pois ela é privada
-     * .
+     * Método necessário que acessa a variável variaveisValor pois ela é
+     * privada .
      *
-     * @return variaveisValor que nada mais é do que o valor da própia variável.
+     * @return variaveisValor que nada mais é do que o valor da própia
+     * variável.
      *
      */
     public final Float[] getVariaveisValor() {

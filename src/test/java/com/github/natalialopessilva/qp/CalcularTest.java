@@ -1,8 +1,10 @@
+package com.github.natalialopessilva.qp;
+
 /*
- * Copyright (c) 2016. Fábrica de Software - Instituto de Informática (UFG)
+ * Copyright (c) 2016. FÃ¡brica de Software - Instituto de InformÃ¡tica (UFG)
  * Creative Commons Attribution 4.0 International License.
  */
-package com.github.natalialopessilva.qp;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +12,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Classe de testes, responsável por realizar os testes de cobertura para classe
+ * Classe de testes, responsÃ¡vel por realizar os testes de cobertura para classe
  * Calcular.
  */
 public class CalcularTest {

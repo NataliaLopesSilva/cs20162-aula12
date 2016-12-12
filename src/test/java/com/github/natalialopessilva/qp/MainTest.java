@@ -22,17 +22,6 @@ public class MainTest {
     }
 
     @Test
-    public void execucaoNoMainParaHtmlComArquivoLocal() throws Exception {
-        Main.main(new String[]{"c://testes.txt",
-            "-h"});
-    }
-
-    @Test
-    public void execucaoNoMainParaJsonComArquivoLocal() throws Exception {
-        Main.main(new String[]{"c://testes.txt"});
-    }
-
-    @Test
     public void argsInvalidoVazio() throws Exception, URISyntaxException {
         exit.expectSystemExitWithStatus(1);
         Main.main(new String[]{});

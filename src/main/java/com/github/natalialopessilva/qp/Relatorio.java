@@ -359,13 +359,8 @@ public class Relatorio {
         arquivo.add("</body>");
         arquivo.add("</html>");
 
-        try (FileWriter fw = new FileWriter("relatorioHTML.html")) {
-            fw.write(arquivo.toString());
-        } catch (IOException ioe) {
-            System.out.println("Erro da geração do Arquivo HTML\n"
-                    + ioe.getMessage());
-            System.exit(1);
-        }
+        FileWriter fw = new FileWriter("relatorioHTML.html");
+        fw.write(arquivo.toString());
     }
 
     /**
@@ -425,12 +420,7 @@ public class Relatorio {
         arquivo.add("    ]");
         arquivo.add("}");
 
-        try (FileWriter fw = new FileWriter("relatorioJSON.json")) {
-            fw.write(arquivo.toString());
-        } catch (IOException ioe) {
-            System.out.println("Erro da geração do Arquivo JSON\n"
-                    + ioe.getMessage());
-            System.exit(1);
-        }
+        FileWriter fw = new FileWriter("relatorioJSON.json");
+        fw.write(arquivo.toString());
     }
 }

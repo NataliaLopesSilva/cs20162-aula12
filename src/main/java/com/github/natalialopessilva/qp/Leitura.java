@@ -50,7 +50,7 @@ public final class Leitura {
     public static ArrayList<String> leituraArquivoLocal(final String diretorio)
             throws Exception {
 
-        List<String> listaLinhas = new ArrayList<>();
+        List<String> listaLinhas = new ArrayList<String>();
 
         try {
             try (FileReader arq = new FileReader(diretorio)) {
@@ -66,6 +66,7 @@ public final class Leitura {
         } catch (IOException e) {
             System.err.printf("Erro na abertura do arquivo local: %s.\n",
                     e.getMessage());
+            System.exit(1);
         }
 
         System.out.println();
@@ -89,7 +90,7 @@ public final class Leitura {
      */
     public static List<String> leituraArquivoUrl(final String diretorio)
             throws Exception {
-        List<String> linhas = new ArrayList<>();
+        List<String> linhas = new ArrayList<String>();
 
         try {
             URL url = new URL(diretorio);
@@ -106,6 +107,7 @@ public final class Leitura {
         } catch (Exception e) {
             System.err.printf("Erro na abertura do arquivo URL: %s.\n",
                     e.getMessage());
+            System.exit(1);
         }
 
         return linhas;

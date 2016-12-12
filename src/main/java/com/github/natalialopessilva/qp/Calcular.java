@@ -61,7 +61,7 @@ public final class Calcular {
 
             } else {
 
-                Map<String, Float> ctx = new HashMap<>();
+                Map<String, Float> ctx = new HashMap<String, Float>();
                 for (int i = 0; i < resultado.getVariaveisNome().length; i++) {
                     ctx.put(resultado.getVariaveisNome()[i],
                             resultado.getVariaveisValor()[i]);
@@ -79,12 +79,12 @@ public final class Calcular {
             }
         }
 
-        listaResultados.stream().forEach((resultado) -> {
+        for (Expressoes resultado : listaResultados) {
             if (resultado.getEsperado() == resultado.getResultado()) {
                 resultado.setSituacao("Aprovado");
             } else {
                 resultado.setSituacao("Reprovado");
             }
-        });
+        }
     }
 }
